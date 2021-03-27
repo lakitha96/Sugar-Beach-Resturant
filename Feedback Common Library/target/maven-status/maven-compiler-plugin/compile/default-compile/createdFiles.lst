@@ -1,0 +1,9 @@
+com/sugarbeach/service/QuestionnaireService.class
+com/sugarbeach/enums/ServiceType.class
+com/sugarbeach/resource/FeedbackResource.class
+com/sugarbeach/enums/RepositoryType.class
+com/sugarbeach/resource/QuestionnaireResource.class
+com/sugarbeach/service/FeedbackService.class
+com/sugarbeach/service/SuperService.class
+com/sugarbeach/resource/AnswerResource.class
+com/sugarbeach/service/ServiceFactory.class
