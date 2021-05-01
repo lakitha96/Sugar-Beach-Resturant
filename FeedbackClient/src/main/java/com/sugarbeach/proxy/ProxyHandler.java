@@ -6,10 +6,8 @@
 package com.sugarbeach.proxy;
 
 import com.sugarbeach.enums.ServiceType;
-import com.sugarbeach.service.FeedbackService;
-import com.sugarbeach.service.QuestionnaireService;
-import com.sugarbeach.service.ServiceFactory;
-import com.sugarbeach.service.SuperService;
+import com.sugarbeach.service.*;
+
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -27,12 +25,14 @@ public class ProxyHandler implements ServiceFactory{
     private ServiceFactory serviceFactory;
     private QuestionnaireService questionnaireService;
     private FeedbackService feedbackService;
+    private AuthenticateService authenticateService;
 
     private ProxyHandler(){
         try{
             serviceFactory=(ServiceFactory) Naming.lookup("rmi://localhost:8081/feedback-server");
             questionnaireService = (QuestionnaireService) serviceFactory.getService(ServiceType.QUESTIONNAIRE);
             feedbackService = (FeedbackService) serviceFactory.getService(ServiceType.FEEDBACK);
+            authenticateService = (AuthenticateService) serviceFactory.getService(ServiceType.AUTH);
         }catch(MalformedURLException | NotBoundException | RemoteException e) {
             Logger.getLogger(ProxyHandler.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -53,6 +53,8 @@ public class ProxyHandler implements ServiceFactory{
                 return questionnaireService;
             case FEEDBACK:
                 return feedbackService;
+            case AUTH:
+                return authenticateService;
             default:
                 return null;
         }

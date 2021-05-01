@@ -8,6 +8,7 @@ package com.sugarbeach.service;
 import com.sugarbeach.enums.ServiceType;
 import com.sugarbeach.proxy.ProxyHandler;
 import com.sugarbeach.resource.FeedbackResource;
+import com.sugarbeach.resource.QuestionnaireAdminResource;
 import com.sugarbeach.resource.QuestionnaireResource;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -29,5 +30,19 @@ public class QuestionnaireClientService implements QuestionnaireService{
     public List<QuestionnaireResource> getAllQuestionWithAnswers() throws RemoteException{
         return questionnaireService.getAllQuestionWithAnswers();
     }
-    
+
+    @Override
+    public boolean save(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
+        return questionnaireService.save(questionnaireAdminResource);
+    }
+
+    @Override
+    public boolean update(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
+        return questionnaireService.update(questionnaireAdminResource);
+    }
+
+    @Override
+    public boolean delete(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
+        return questionnaireService.delete(questionnaireAdminResource);
+    }
 }

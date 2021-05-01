@@ -1,11 +1,11 @@
 com/sugarbeach/view/QuestionnaireForm$1.class
 com/sugarbeach/view/QuestionnaireForm$4.class
-com/sugarbeach/view/CustomerForm$1.class
 com/sugarbeach/proxy/ProxyHandler$1.class
 com/sugarbeach/service/FeedbackClientService.class
-com/sugarbeach/view/CustomerForm$2.class
+com/sugarbeach/view/CustomerForm$1.class
 com/sugarbeach/proxy/ProxyHandler.class
 com/sugarbeach/service/QuestionnaireClientService.class
+com/sugarbeach/view/CustomerForm$2.class
 com/sugarbeach/view/QuestionnaireForm$2.class
 com/sugarbeach/view/QuestionnaireForm.class
 com/sugarbeach/view/CustomerForm.class

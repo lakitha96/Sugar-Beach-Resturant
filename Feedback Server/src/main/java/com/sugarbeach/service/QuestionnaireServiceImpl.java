@@ -7,11 +7,13 @@ import com.sugarbeach.repository.AnswerRepository;
 import com.sugarbeach.repository.QuestionRepository;
 import com.sugarbeach.repository.RepositoryFactory;
 import com.sugarbeach.resource.AnswerResource;
+import com.sugarbeach.resource.QuestionnaireAdminResource;
 import com.sugarbeach.resource.QuestionnaireResource;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /**
@@ -41,5 +43,34 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
             List<String> answerList = answerModelList.stream().map(AnswerModel::getAnswer).collect(Collectors.toList());
             return new QuestionnaireResource(questionModel.getType(), questionModel.getQuestion(), answerList, answerResourceList);
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean save(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
+        long questionId = questionRepository.saveQuestionnaire(questionnaireAdminResource);
+        questionnaireAdminResource.setQuestionId((int) questionId);
+        AtomicBoolean isAnswersSaved = new AtomicBoolean(false);
+        questionnaireAdminResource.getAnswerList().forEach(answerString -> {
+            isAnswersSaved.set(answerRepository.save(questionnaireAdminResource.getQuestionId(), answerString));
+        });
+        return questionId > 0 && isAnswersSaved.get();
+    }
+
+    @Override
+    public boolean update(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
+        boolean isUpdated = questionRepository.update(questionnaireAdminResource);
+        AtomicBoolean isAnswersUpdated = new AtomicBoolean(false);
+        answerRepository.delete(questionnaireAdminResource.getQuestionId());
+        questionnaireAdminResource.getAnswerList().forEach(answerString -> {
+            isAnswersUpdated.set(answerRepository.save(questionnaireAdminResource.getQuestionId(), answerString));
+        });
+        return isUpdated && isAnswersUpdated.get();
+    }
+
+    @Override
+    public boolean delete(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
+        boolean isDeleted = questionRepository.delete(questionnaireAdminResource.getQuestionId());
+        boolean isAnswerDeleted = answerRepository.delete(questionnaireAdminResource.getQuestionId());
+        return isDeleted && isAnswerDeleted;
     }
 }

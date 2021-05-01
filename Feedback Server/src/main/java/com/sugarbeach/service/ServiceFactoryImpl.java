@@ -28,6 +28,8 @@ public class ServiceFactoryImpl extends UnicastRemoteObject implements ServiceFa
                 return new QuestionnaireServiceImpl();
             case FEEDBACK:
                 return new FeedbackServiceImpl();
+            case AUTH:
+                return new AuthenticateServiceImpl();
             default:
                 return null;
         }

@@ -27,7 +27,6 @@ public class FeedbackRepository implements SuperRepository {
             e.printStackTrace();
             throw new SugarBeachDatabaseException(e.getMessage());
         }
-
     }
 
     @Override

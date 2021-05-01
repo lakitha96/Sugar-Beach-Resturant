@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DBConnection {
     public static String dbUrl = "jdbc:mysql://localhost:3306/sugar_beach?useSSL=false";
 
-    public static String user = "root";
+    public static String user = "admin-user";
 
     public static String password = "password";
 

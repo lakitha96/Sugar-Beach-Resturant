@@ -27,6 +27,8 @@ public class RepositoryFactory {
                 return new AnswerRepository();
             case FEEDBACK:
                 return new FeedbackRepository();
+            case USER:
+                return new UserRepository();
             default:
                 return null;
         }

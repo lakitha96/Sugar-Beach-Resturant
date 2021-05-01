@@ -3,6 +3,7 @@ package com.sugarbeach.repository;
 import com.sugarbeach.db.DBConnection;
 import com.sugarbeach.exception.SugarBeachDatabaseException;
 import com.sugarbeach.model.AnswerModel;
+import com.sugarbeach.resource.QuestionnaireAdminResource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +18,48 @@ public class AnswerRepository implements SuperRepository{
 
     @Override
     public boolean save(Object o) {
-
         return false;
+    }
+
+    public boolean save(int questionId, String answer) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String insertTableSQL = "INSERT INTO answer (`question_id`, `answer`) VALUES (?,?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertTableSQL)) {
+                preparedStatement.setInt(1, questionId);
+                preparedStatement.setString(2, answer);
+                return preparedStatement.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SugarBeachDatabaseException(e.getMessage());
+        }
+    }
+
+    public boolean update(int questionId, String answer) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String insertTableSQL = "UPDATE answer SET answer = ? WHERE question_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertTableSQL)) {
+                preparedStatement.setString(1, answer);
+                preparedStatement.setInt(2, questionId);
+                return preparedStatement.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SugarBeachDatabaseException(e.getMessage());
+        }
+    }
+
+    public boolean delete(int questionId) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String insertTableSQL = "DELETE FROM answer WHERE question_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertTableSQL)) {
+                preparedStatement.setInt(1, questionId);
+                return preparedStatement.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SugarBeachDatabaseException(e.getMessage());
+        }
     }
 
     @Override

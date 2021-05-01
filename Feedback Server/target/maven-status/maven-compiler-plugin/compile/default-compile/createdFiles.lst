@@ -4,6 +4,7 @@ com/sugarbeach/FeedbackServer.class
 com/sugarbeach/service/ServiceFactoryImpl$1.class
 com/sugarbeach/service/QuestionnaireServiceImpl.class
 com/sugarbeach/repository/AnswerRepository.class
+com/sugarbeach/service/FeedbackServiceImpl.class
 com/sugarbeach/repository/QuestionRepository.class
 com/sugarbeach/repository/RepositoryFactory$1.class
 com/sugarbeach/model/QuestionModel.class
