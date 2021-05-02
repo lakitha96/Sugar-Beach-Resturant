@@ -7,13 +7,16 @@ package com.sugarbeach.view;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.sugarbeach.resource.AnswerResource;
+import com.sugarbeach.resource.FeedbackReportResource;
 import com.sugarbeach.resource.QuestionnaireAdminResource;
 import com.sugarbeach.resource.QuestionnaireResource;
+import com.sugarbeach.service.FeedbackClientService;
 import com.sugarbeach.service.QuestionnaireClientService;
 import com.sugarbeach.service.QuickChartClientService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class AdminDashboardForm extends javax.swing.JFrame {
      */
     public AdminDashboardForm(String username) throws RemoteException {
         initComponents();
+        btnReportGenerate.setEnabled(false);
         lblUsername.setText(username);
         initTableData();
         txtQuestionId.setEditable(false);
@@ -67,6 +71,7 @@ public class AdminDashboardForm extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnReportGenerate = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblQuestionnaire = new javax.swing.JTable();
 
@@ -168,6 +173,13 @@ public class AdminDashboardForm extends javax.swing.JFrame {
             }
         });
 
+        btnReset.setText("Reset Fields");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -183,12 +195,7 @@ public class AdminDashboardForm extends javax.swing.JFrame {
                                 .addGap(386, 386, 386))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
+                                .addGap(29, 29, 29))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -205,29 +212,31 @@ public class AdminDashboardForm extends javax.swing.JFrame {
                                         .addComponent(jScrollPane1)
                                         .addGap(52, 52, 52))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lblAnswer1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtAnswer1)
-                                        .addGap(3, 3, 3)
-                                        .addComponent(lblAnswer2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(btnReportGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(38, 38, 38)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtAnswer2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblAnswer3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtAnswer3))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(lblAnswer1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtAnswer1)
+                                .addGap(3, 3, 3)
+                                .addComponent(lblAnswer2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtAnswer2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblAnswer3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtAnswer3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnReportGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,7 +275,9 @@ public class AdminDashboardForm extends javax.swing.JFrame {
                     .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReportGenerate))
-                .addGap(56, 56, 56))
+                .addGap(18, 18, 18)
+                .addComponent(btnReset)
+                .addGap(11, 11, 11))
         );
 
         tblQuestionnaire.setModel(new javax.swing.table.DefaultTableModel(
@@ -312,6 +323,7 @@ public class AdminDashboardForm extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnDeleteActionPerformed
         if (!txtQuestionId.getText().isEmpty()) {
             QuestionnaireAdminResource adminResource = getQuestionnaireAdminResource();
+            adminResource.setQuestionId(Integer.parseInt(txtQuestionId.getText()));
             QuestionnaireClientService questionnaireClientService = new QuestionnaireClientService();
             if (questionnaireClientService.delete(adminResource)) {
                 initTableData();
@@ -336,12 +348,12 @@ public class AdminDashboardForm extends javax.swing.JFrame {
         answerList.add(txtAnswer2.getText());
         answerList.add(txtAnswer3.getText());
         adminResource.setAnswerList(answerList);
-        adminResource.setQuestionId(Integer.parseInt(txtQuestionId.getText()));
         return adminResource;
     }
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnUpdateActionPerformed
         if (!txtQuestionId.getText().isEmpty()) {
             QuestionnaireAdminResource adminResource = getQuestionnaireAdminResource();
+            adminResource.setQuestionId(Integer.parseInt(txtQuestionId.getText()));
             QuestionnaireClientService questionnaireClientService = new QuestionnaireClientService();
             if (questionnaireClientService.update(adminResource)) {
                 initTableData();
@@ -368,6 +380,7 @@ public class AdminDashboardForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAnswer3ActionPerformed
 
     private void tblQuestionnaireMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuestionnaireMouseClicked
+        btnReportGenerate.setEnabled(true);
         int row = tblQuestionnaire.getSelectedRow();
         String question = tblQuestionnaire.getModel().getValueAt(row, 0).toString();
         String answer1 = tblQuestionnaire.getModel().getValueAt(row, 1).toString();
@@ -405,11 +418,28 @@ public class AdminDashboardForm extends javax.swing.JFrame {
     private void btnReportGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportGenerateActionPerformed
         try {
             QuickChartClientService chartClientService = new QuickChartClientService();
-            chartClientService.generateChart();
-        } catch (UnirestException ex) {
+            FeedbackClientService feedbackClientService = new FeedbackClientService();
+            FeedbackReportResource feedbackReportData = feedbackClientService.getFeedbackReportData(Integer.parseInt(txtQuestionId.getText()));
+            if (feedbackReportData == null || feedbackReportData.getAnswerReportResources().isEmpty()) {
+                JOptionPane optionPane = new JOptionPane("No enough data found to generate a report.", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = optionPane.createDialog(jPanel1,"Failed");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            } else {
+                chartClientService.bindData(feedbackReportData);
+            }
+        } catch (IOException | UnirestException ex) {
             Logger.getLogger(AdminDashboardForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnReportGenerateActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        txtQuestionId.setText("");
+        txtQuestion.setText("");
+        txtAnswer1.setText("");
+        txtAnswer2.setText("");
+        txtAnswer3.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -453,6 +483,7 @@ public class AdminDashboardForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnReportGenerate;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;

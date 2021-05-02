@@ -1,0 +1,13 @@
+.idea
+Feedback Common Library/.idea
+Feedback Common Library/Feedback Common Library.iml
+Feedback Common Library/target
+
+Feedback Server/.idea
+Feedback Server/Feedback Common Library.iml
+Feedback Server/target
+
+FeedbackClient/.idea
+FeedbackClient/Feedback Common Library.iml
+FeedbackClient/target
+

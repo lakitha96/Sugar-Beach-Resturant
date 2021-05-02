@@ -3,7 +3,6 @@ package com.sugarbeach.repository;
 import com.sugarbeach.db.DBConnection;
 import com.sugarbeach.exception.SugarBeachDatabaseException;
 import com.sugarbeach.model.AnswerModel;
-import com.sugarbeach.resource.QuestionnaireAdminResource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,6 +91,27 @@ public class AnswerRepository implements SuperRepository{
                 }
             }
             return answerList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SugarBeachDatabaseException(e.getMessage());
+        }
+    }
+
+    public String getAnswerById(int answerId) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM answer where id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, answerId);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return resultSet.getString("answer");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new SugarBeachDatabaseException(e.getMessage());
+                }
+            }
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             throw new SugarBeachDatabaseException(e.getMessage());

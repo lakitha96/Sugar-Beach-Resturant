@@ -2,6 +2,7 @@ package com.sugarbeach.repository;
 
 import com.sugarbeach.db.DBConnection;
 import com.sugarbeach.exception.SugarBeachDatabaseException;
+import com.sugarbeach.model.AnswerModel;
 import com.sugarbeach.model.QuestionModel;
 import com.sugarbeach.resource.FeedbackResource;
 import com.sugarbeach.resource.QuestionnaireAdminResource;
@@ -106,5 +107,34 @@ public class QuestionRepository implements SuperRepository{
     @Override
     public List findAllById(int id) {
         return null;
+    }
+
+    public QuestionModel findByQuestionId(int questionId) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM question where id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, questionId);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String question = resultSet.getString("question");
+                        String type = resultSet.getString("type");
+
+                        QuestionModel questionModel = new QuestionModel();
+                        questionModel.setId(id);
+                        questionModel.setQuestion(question);
+                        questionModel.setType(type);
+                        return questionModel;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new SugarBeachDatabaseException(e.getMessage());
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SugarBeachDatabaseException(e.getMessage());
+        }
     }
 }

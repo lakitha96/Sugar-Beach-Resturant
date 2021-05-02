@@ -2,6 +2,7 @@ package com.sugarbeach.service;
 
 import com.sugarbeach.enums.ServiceType;
 import com.sugarbeach.proxy.ProxyHandler;
+import com.sugarbeach.resource.FeedbackReportResource;
 import com.sugarbeach.resource.FeedbackResource;
 
 import java.rmi.RemoteException;
@@ -20,5 +21,10 @@ public class FeedbackClientService implements FeedbackService{
     @Override
     public boolean save(List<FeedbackResource> feedbackResourceList) throws RemoteException{
         return feedbackService.save(feedbackResourceList);
+    }
+
+    @Override
+    public FeedbackReportResource getFeedbackReportData(int questionId) throws RemoteException {
+        return feedbackService.getFeedbackReportData(questionId);
     }
 }
