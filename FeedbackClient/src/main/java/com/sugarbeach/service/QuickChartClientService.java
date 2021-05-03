@@ -34,13 +34,13 @@ public class QuickChartClientService {
     /**
      * This method will bind all data as per needed PieChartResource
      */
-    public void bindData(FeedbackReportResource feedbackReportResource) throws UnirestException, IOException {
+    public File bindData(FeedbackReportResource feedbackReportResource) throws UnirestException, IOException {
         PieChartResource pieChartResource = new PieChartResource();
         pieChartResource.setBackgroundColor("#fff");
         pieChartResource.setWidth(900);
         pieChartResource.setHeight(500);
         pieChartResource.setDevicePixelRatio(1.0);
-        pieChartResource.setFormat("pdf");
+        pieChartResource.setFormat("png");
 
         QuickChartResource quickChartResource = new QuickChartResource();
         quickChartResource.setType("doughnut");
@@ -77,7 +77,7 @@ public class QuickChartClientService {
         optionsResource.setPlugins(pluginsResource);
         quickChartResource.setOptions(optionsResource);
         pieChartResource.setChart(quickChartResource);
-        generateChart(pieChartResource);
+        return generateChart(pieChartResource);
     }
 
     /**
@@ -93,14 +93,16 @@ public class QuickChartClientService {
 
     /**
      * This method used to generate chart using external api.
+     * https://quickchart.io
+     *
      * QuickChart is a web service that generates chart images on-the-fly.
-     * Once report is generated it will be open with system default pdf viewer.
+     * Once report is generated it will be open with report viewer form.
      *
      * @param pieChartResource
      * @throws UnirestException
      * @throws IOException
      */
-    public void generateChart(PieChartResource pieChartResource) throws UnirestException, IOException {
+    public File generateChart(PieChartResource pieChartResource) throws UnirestException, IOException {
         HttpResponse<String> response = Unirest.post("https://quickchart.io/chart")
                 .header("Content-Type", "application/json")
                 .body(getJsonString(pieChartResource))
@@ -111,13 +113,7 @@ public class QuickChartClientService {
         Files.createDirectories(Paths.get(System.getProperty("user.dir") + "/reports"));
         File file = new File(System.getProperty("user.dir") + "/reports/" + UUID.randomUUID() + ".pdf");
         copyInputStreamToFile(input, file);
-
-        //open file on default pdf open program on the system
-        if (file.exists()) {
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(file);
-            }
-        }
+        return file;
     }
 
     /**

@@ -446,7 +446,9 @@ public class AdminDashboardForm extends javax.swing.JFrame {
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             } else {
-                chartClientService.bindData(feedbackReportData);
+               ReportViewerForm reportViewerForm = new ReportViewerForm(chartClientService.bindData(feedbackReportData));
+                reportViewerForm.setVisible(true);
+               reportViewerForm.setLocationRelativeTo(null);
             }
         } catch (IOException | UnirestException ex) {
             Logger.getLogger(AdminDashboardForm.class.getName()).log(Level.SEVERE, null, ex);
