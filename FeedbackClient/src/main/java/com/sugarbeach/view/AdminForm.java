@@ -5,11 +5,10 @@
  */
 package com.sugarbeach.view;
 
-import com.sugarbeach.service.AuthenticateClientService;
+import com.sugarbeach.controller.AuthenticateController;
 
 import javax.swing.*;
 import java.rmi.RemoteException;
-import java.util.Arrays;
 
 /**
  *
@@ -130,8 +129,8 @@ public class AdminForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnLoginActionPerformed
-        AuthenticateClientService authenticateClientService = new AuthenticateClientService();
-        boolean isSuccess = authenticateClientService.login("ADMIN", txtUsername.getText(), new String(txtPassword.getPassword()));
+        AuthenticateController authenticateController = new AuthenticateController();
+        boolean isSuccess = authenticateController.login("ADMIN", txtUsername.getText(), new String(txtPassword.getPassword()));
         if (isSuccess) {
             AdminDashboardForm adminDashboardForm = new AdminDashboardForm("USER - " + txtUsername.getText());
             adminDashboardForm.setVisible(true);

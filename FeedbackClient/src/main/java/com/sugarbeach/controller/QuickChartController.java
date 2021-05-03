@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sugarbeach.service;
+package com.sugarbeach.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,7 +13,6 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.sugarbeach.model.*;
 import com.sugarbeach.resource.FeedbackReportResource;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
 /**
  * @author lakitha
  */
-public class QuickChartClientService {
+public class QuickChartController {
     public static final int DEFAULT_BUFFER_SIZE = 8192;
 
     /**
@@ -94,7 +93,7 @@ public class QuickChartClientService {
     /**
      * This method used to generate chart using external api.
      * https://quickchart.io
-     *
+     * <p>
      * QuickChart is a web service that generates chart images on-the-fly.
      * Once report is generated it will be open with report viewer form.
      *
@@ -111,7 +110,7 @@ public class QuickChartClientService {
 
         //create file on system
         Files.createDirectories(Paths.get(System.getProperty("user.dir") + "/reports"));
-        File file = new File(System.getProperty("user.dir") + "/reports/" + UUID.randomUUID() + ".pdf");
+        File file = new File(System.getProperty("user.dir") + "/reports/" + UUID.randomUUID() + ".png");
         copyInputStreamToFile(input, file);
         return file;
     }
@@ -121,8 +120,6 @@ public class QuickChartClientService {
      */
     private static void copyInputStreamToFile(InputStream inputStream, File file)
             throws IOException {
-
-        // append = false
         try (FileOutputStream outputStream = new FileOutputStream(file, false)) {
             int read;
             byte[] bytes = new byte[DEFAULT_BUFFER_SIZE];

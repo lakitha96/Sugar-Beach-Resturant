@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sugarbeach.service;
+package com.sugarbeach.controller;
 
 import com.sugarbeach.enums.ServiceType;
 import com.sugarbeach.proxy.ProxyHandler;
 import com.sugarbeach.resource.FeedbackResource;
 import com.sugarbeach.resource.QuestionnaireAdminResource;
 import com.sugarbeach.resource.QuestionnaireResource;
+import com.sugarbeach.service.QuestionnaireService;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +20,11 @@ import java.util.List;
  *
  * @author lakitha
  */
-public class QuestionnaireClientService implements QuestionnaireService{
+public class QuestionnaireController implements QuestionnaireService {
     
     private QuestionnaireService questionnaireService;
 
-    public QuestionnaireClientService() throws RemoteException {
+    public QuestionnaireController() throws RemoteException {
         questionnaireService = (QuestionnaireService) ProxyHandler.getInstance().getService(ServiceType.QUESTIONNAIRE);
     }
 

@@ -1,14 +1,15 @@
-package com.sugarbeach.service;
+package com.sugarbeach.controller;
 
 import com.sugarbeach.enums.ServiceType;
 import com.sugarbeach.proxy.ProxyHandler;
+import com.sugarbeach.service.AuthenticateService;
 
 import java.rmi.RemoteException;
 
-public class AuthenticateClientService implements AuthenticateService{
+public class AuthenticateController implements AuthenticateService {
     private AuthenticateService authenticateService;
 
-    public AuthenticateClientService() throws RemoteException {
+    public AuthenticateController() throws RemoteException {
         this.authenticateService = (AuthenticateService) ProxyHandler.getInstance().getService(ServiceType.AUTH);
     }
 

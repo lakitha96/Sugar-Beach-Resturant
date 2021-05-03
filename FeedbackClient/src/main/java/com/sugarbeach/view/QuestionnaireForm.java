@@ -8,17 +8,15 @@ package com.sugarbeach.view;
 import com.sugarbeach.resource.AnswerResource;
 import com.sugarbeach.resource.FeedbackResource;
 import com.sugarbeach.resource.QuestionnaireResource;
-import com.sugarbeach.service.FeedbackClientService;
-import com.sugarbeach.service.QuestionnaireClientService;
-import java.awt.Dimension;
+import com.sugarbeach.controller.FeedbackController;
+import com.sugarbeach.controller.QuestionnaireController;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-
-import jdk.nashorn.internal.objects.NativeArray;
 
 /**
  *
@@ -262,8 +260,8 @@ public class QuestionnaireForm extends javax.swing.JFrame {
     private boolean isLastQuestion;
 
     private void bindQuestions(int questionNumber) throws RemoteException {
-        QuestionnaireClientService questionnaireClientService = new QuestionnaireClientService();
-        questionnaires = questionnaireClientService.getAllQuestionWithAnswers();
+        QuestionnaireController questionnaireController = new QuestionnaireController();
+        questionnaires = questionnaireController.getAllQuestionWithAnswers();
 
         if(questionNumber == (questionnaires.size() -1)){
                 isLastQuestion = true;
@@ -320,8 +318,8 @@ public class QuestionnaireForm extends javax.swing.JFrame {
         }
 
         if(isLastQuestion) {
-            FeedbackClientService feedbackClientService = new FeedbackClientService();
-            if (feedbackClientService.save(feedbackList));
+            FeedbackController feedbackController = new FeedbackController();
+            if (feedbackController.save(feedbackList));
                 JOptionPane.showMessageDialog(jPanel1, "Thank you for your feedback!");
         }
 

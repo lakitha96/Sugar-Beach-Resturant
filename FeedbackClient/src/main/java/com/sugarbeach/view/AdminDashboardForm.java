@@ -10,9 +10,9 @@ import com.sugarbeach.resource.AnswerResource;
 import com.sugarbeach.resource.FeedbackReportResource;
 import com.sugarbeach.resource.QuestionnaireAdminResource;
 import com.sugarbeach.resource.QuestionnaireResource;
-import com.sugarbeach.service.FeedbackClientService;
-import com.sugarbeach.service.QuestionnaireClientService;
-import com.sugarbeach.service.QuickChartClientService;
+import com.sugarbeach.controller.FeedbackController;
+import com.sugarbeach.controller.QuestionnaireController;
+import com.sugarbeach.controller.QuickChartController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -344,8 +344,8 @@ public class AdminDashboardForm extends javax.swing.JFrame {
         if (!txtQuestionId.getText().isEmpty()) {
             QuestionnaireAdminResource adminResource = getQuestionnaireAdminResource();
             adminResource.setQuestionId(Integer.parseInt(txtQuestionId.getText()));
-            QuestionnaireClientService questionnaireClientService = new QuestionnaireClientService();
-            if (questionnaireClientService.delete(adminResource)) {
+            QuestionnaireController questionnaireController = new QuestionnaireController();
+            if (questionnaireController.delete(adminResource)) {
                 initTableData();
                 JOptionPane optionPane = new JOptionPane("Successfully deleted.", JOptionPane.OK_OPTION);
                 JDialog dialog = optionPane.createDialog(jPanel1, "Success");
@@ -374,8 +374,8 @@ public class AdminDashboardForm extends javax.swing.JFrame {
         if (!txtQuestionId.getText().isEmpty()) {
             QuestionnaireAdminResource adminResource = getQuestionnaireAdminResource();
             adminResource.setQuestionId(Integer.parseInt(txtQuestionId.getText()));
-            QuestionnaireClientService questionnaireClientService = new QuestionnaireClientService();
-            if (questionnaireClientService.update(adminResource)) {
+            QuestionnaireController questionnaireController = new QuestionnaireController();
+            if (questionnaireController.update(adminResource)) {
                 initTableData();
                 JOptionPane optionPane = new JOptionPane("Successfully updated.", JOptionPane.OK_OPTION);
                 JDialog dialog = optionPane.createDialog(jPanel1,"Success");
@@ -418,9 +418,9 @@ public class AdminDashboardForm extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_btnSaveActionPerformed
         QuestionnaireAdminResource adminResource = getQuestionnaireAdminResource();
-        QuestionnaireClientService questionnaireClientService = new QuestionnaireClientService();
+        QuestionnaireController questionnaireController = new QuestionnaireController();
 
-        if (questionnaireClientService.save(adminResource)) {
+        if (questionnaireController.save(adminResource)) {
             initTableData();
             JOptionPane optionPane = new JOptionPane("Successfully saved.", JOptionPane.OK_OPTION);
             JDialog dialog = optionPane.createDialog(jPanel1,"Success");
@@ -437,9 +437,9 @@ public class AdminDashboardForm extends javax.swing.JFrame {
 
     private void btnReportGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportGenerateActionPerformed
         try {
-            QuickChartClientService chartClientService = new QuickChartClientService();
-            FeedbackClientService feedbackClientService = new FeedbackClientService();
-            FeedbackReportResource feedbackReportData = feedbackClientService.getFeedbackReportData(Integer.parseInt(txtQuestionId.getText()));
+            QuickChartController chartClientService = new QuickChartController();
+            FeedbackController feedbackController = new FeedbackController();
+            FeedbackReportResource feedbackReportData = feedbackController.getFeedbackReportData(Integer.parseInt(txtQuestionId.getText()));
             if (feedbackReportData == null || feedbackReportData.getAnswerReportResources().isEmpty()) {
                 JOptionPane optionPane = new JOptionPane("No enough data found to generate a report.", JOptionPane.ERROR_MESSAGE);
                 JDialog dialog = optionPane.createDialog(jPanel1,"Failed");
@@ -533,8 +533,8 @@ public class AdminDashboardForm extends javax.swing.JFrame {
     private void initTableData() throws RemoteException {
         DefaultTableModel model = (DefaultTableModel) tblQuestionnaire.getModel();
         model.setRowCount(0);
-        QuestionnaireClientService questionnaireClientService = new QuestionnaireClientService();
-        List<QuestionnaireResource> questionnaire = questionnaireClientService.getAllQuestionWithAnswers();
+        QuestionnaireController questionnaireController = new QuestionnaireController();
+        List<QuestionnaireResource> questionnaire = questionnaireController.getAllQuestionWithAnswers();
         for (int i = 0, questionnaireSize = questionnaire.size(); i < questionnaireSize; i++) {
             List<String> tableData = new ArrayList<>();
             QuestionnaireResource questionnaireResource = questionnaire.get(i);
