@@ -23,16 +23,17 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     private QuestionRepository questionRepository;
     private AnswerRepository answerRepository;
 
+    /**
+     * On this constructor objects will initiate
+     */
     public QuestionnaireServiceImpl() throws RemoteException {
         this.questionRepository = (QuestionRepository) RepositoryFactory.getInstance().getRepository(RepositoryType.QUESTION);
         this.answerRepository = (AnswerRepository) RepositoryFactory.getInstance().getRepository(RepositoryType.ANSWER);
     }
 
     /**
-     * This method used to retrieve all questionnaire with it answers
+     * This method used to retrieve all questionnaire with it's answers
      *
-     * @return List<QuestionnaireResource>
-     * @throws RemoteException
      */
     @Override
     public List<QuestionnaireResource> getAllQuestionWithAnswers() throws RemoteException{
@@ -54,10 +55,6 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     /**
      * This method used save question and answers
      * This method only used for admin panel
-     *
-     * @param questionnaireAdminResource
-     * @return success/ failed
-     * @throws RemoteException
      */
     @Override
     public boolean save(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
@@ -73,10 +70,6 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     /**
      * This method used update question and answers
      * This method only used for admin panel
-     *
-     * @param questionnaireAdminResource
-     * @return success/ failed
-     * @throws RemoteException
      */
     @Override
     public boolean update(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
@@ -92,10 +85,6 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     /**
      * This method used delete question and answers
      * This method only used for admin panel
-     *
-     * @param questionnaireAdminResource
-     * @return success/ failed
-     * @throws RemoteException
      */
     @Override
     public boolean delete(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{

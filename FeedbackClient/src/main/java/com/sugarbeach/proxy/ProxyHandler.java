@@ -27,6 +27,10 @@ public class ProxyHandler implements ServiceFactory{
     private FeedbackService feedbackService;
     private AuthenticateService authenticateService;
 
+    /**
+     * This method used to connected with the server side binding using RMI
+     * Then all other needed service classes will initiate once client connected to the server successfully
+     */
     private ProxyHandler(){
         try{
             serviceFactory=(ServiceFactory) Naming.lookup("rmi://localhost:8081/feedback-server");

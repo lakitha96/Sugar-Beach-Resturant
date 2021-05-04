@@ -22,8 +22,11 @@ public class DBConnection {
 
 
     /**
+     * Used design pattern is singleton
+     * This pattern uses a single class that is in charge of creating an object
+     * while ensuring that only single object is generated.
+     *
      * This method will return sql connection for db access purposes.
-     * Used design pattern singleton
      *
      * @return Connection
      * @throws SQLException

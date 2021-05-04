@@ -26,9 +26,7 @@ public class QuestionnaireForm extends javax.swing.JFrame {
 
 
     /**
-     * Creates new form FeedbackForm1
-     * @param name
-     * @throws java.rmi.RemoteException
+     * This method used to initiate next question, customer name, and validation of button submit
      */
     public QuestionnaireForm(String name) throws RemoteException {
         initComponents();
@@ -203,46 +201,6 @@ public class QuestionnaireForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cbxAnswer2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(QuestionnaireForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(QuestionnaireForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(QuestionnaireForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(QuestionnaireForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    new QuestionnaireForm().setVisible(true);
-//                } catch (RemoteException ex) {
-//                    Logger.getLogger(QuestionnaireForm.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSubmit;
     private javax.swing.JCheckBox cbxAnswer1;
@@ -259,6 +217,9 @@ public class QuestionnaireForm extends javax.swing.JFrame {
     private final String customerName;
     private boolean isLastQuestion;
 
+    /**
+     * This method used to bind question one by one after clicking next button
+     */
     private void bindQuestions(int questionNumber) throws RemoteException {
         QuestionnaireController questionnaireController = new QuestionnaireController();
         questionnaires = questionnaireController.getAllQuestionWithAnswers();
@@ -300,6 +261,11 @@ public class QuestionnaireForm extends javax.swing.JFrame {
         bindQuestions(questionNumber++);
     }
 
+    /**
+     * This method will collect all the feedback from customer and once
+     * last one reached it will be send to server to save
+     * @throws RemoteException
+     */
     private void bindFeedback() throws RemoteException {
         AnswerResource answerResource = null;
         if(cbxAnswer1.isSelected()) {

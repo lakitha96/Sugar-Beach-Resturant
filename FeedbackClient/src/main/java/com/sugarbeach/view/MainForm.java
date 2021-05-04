@@ -106,6 +106,9 @@ public class MainForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method used to navigate to CustomerForm
+     */
     private void btnGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuestActionPerformed
         CustomerForm customerForm = new CustomerForm();
         customerForm.setVisible(true);
@@ -113,6 +116,9 @@ public class MainForm extends javax.swing.JFrame {
         customerForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnGuestActionPerformed
 
+    /**
+     * This method used to navigate to AdminForm
+     */
     private void btnAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLoginActionPerformed
         AdminForm adminPannel = new AdminForm();
         adminPannel.setVisible(true);
@@ -121,7 +127,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     /**
-     * @param args the command line arguments
+     * Main form for the application start
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -31,7 +31,7 @@ public class QuickChartController {
     public static final int DEFAULT_BUFFER_SIZE = 8192;
 
     /**
-     * This method will bind all data as per needed PieChartResource
+     * This method will bind all data as per needed to create PieChart
      */
     public File bindData(FeedbackReportResource feedbackReportResource) throws UnirestException, IOException {
         PieChartResource pieChartResource = new PieChartResource();
@@ -81,9 +81,6 @@ public class QuickChartController {
 
     /**
      * This method will convert any object to json string
-     *
-     * @param object object
-     * @return json string
      */
     private String getJsonString(Object object) {
         Gson gson = new GsonBuilder().create();
@@ -93,13 +90,9 @@ public class QuickChartController {
     /**
      * This method used to generate chart using external api.
      * https://quickchart.io
-     * <p>
+     *
      * QuickChart is a web service that generates chart images on-the-fly.
      * Once report is generated it will be open with report viewer form.
-     *
-     * @param pieChartResource
-     * @throws UnirestException
-     * @throws IOException
      */
     public File generateChart(PieChartResource pieChartResource) throws UnirestException, IOException {
         HttpResponse<String> response = Unirest.post("https://quickchart.io/chart")

@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author lakitha
  */
-public class QuestionnaireController implements QuestionnaireService {
+public class QuestionnaireController {
     
     private QuestionnaireService questionnaireService;
 
@@ -28,22 +28,18 @@ public class QuestionnaireController implements QuestionnaireService {
         questionnaireService = (QuestionnaireService) ProxyHandler.getInstance().getService(ServiceType.QUESTIONNAIRE);
     }
 
-    @Override
     public List<QuestionnaireResource> getAllQuestionWithAnswers() throws RemoteException{
         return questionnaireService.getAllQuestionWithAnswers();
     }
 
-    @Override
     public boolean save(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
         return questionnaireService.save(questionnaireAdminResource);
     }
 
-    @Override
     public boolean update(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
         return questionnaireService.update(questionnaireAdminResource);
     }
 
-    @Override
     public boolean delete(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
         return questionnaireService.delete(questionnaireAdminResource);
     }

@@ -12,19 +12,17 @@ import java.util.List;
 /**
  * @author Lakitha Prabudh on 3/27/21
  */
-public class FeedbackController implements FeedbackService {
+public class FeedbackController {
     private FeedbackService feedbackService;
 
     public FeedbackController() throws RemoteException {
         feedbackService = (FeedbackService) ProxyHandler.getInstance().getService(ServiceType.FEEDBACK);
     }
 
-    @Override
     public boolean save(List<FeedbackResource> feedbackResourceList) throws RemoteException{
         return feedbackService.save(feedbackResourceList);
     }
 
-    @Override
     public FeedbackReportResource getFeedbackReportData(int questionId) throws RemoteException {
         return feedbackService.getFeedbackReportData(questionId);
     }

@@ -14,6 +14,9 @@ public class AuthenticateServiceImpl extends UnicastRemoteObject implements Auth
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * On this constructor objects will initiate
+     */
     public AuthenticateServiceImpl() throws RemoteException {
         this.userRepository = (UserRepository) RepositoryFactory.getInstance().getRepository(RepositoryType.USER);
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -25,12 +28,10 @@ public class AuthenticateServiceImpl extends UnicastRemoteObject implements Auth
      * passwords matcher will check password accuracy and return matched or not
      *
      ** third party library used - spring-security-crypto
+     ** https://docs.spring.io/spring-security/site/docs/5.0.x/reference/html/crypto.html
      ** plain password and database saved encrypted password will check on matches method
      *
-     * @param role - admin role
-     * @param username
-     * @param password - plain - password
-     * @return success or failed
+     * @return success (true) or failed (false) boolean
      */
     @Override
     public boolean login(String role, String username, String password) {

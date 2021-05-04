@@ -25,6 +25,9 @@ public class FeedbackServiceImpl extends UnicastRemoteObject implements Feedback
     private AnswerRepository answerRepository;
     private QuestionRepository questionRepository;
 
+    /**
+     * On this constructor objects will initiate
+     */
     public FeedbackServiceImpl() throws RemoteException {
         this.feedbackRepository = (FeedbackRepository) RepositoryFactory.getInstance().getRepository(RepositoryType.FEEDBACK);
         this.answerRepository = (AnswerRepository) RepositoryFactory.getInstance().getRepository(RepositoryType.ANSWER);
