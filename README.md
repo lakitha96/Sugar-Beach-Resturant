@@ -18,5 +18,5 @@ To Run the project
 
 Please visit following sites if needed,
 
-video - https://youtu.be/ZexFLk6eYX0
-progress report, java docs - https://drive.google.com/drive/folders/1w8xA4svD0z-TdXqG76f-g_uQhDjX3iEA?usp=sharing
+- video - https://youtu.be/ZexFLk6eYX0
+- progress report, java docs - https://drive.google.com/drive/folders/1w8xA4svD0z-TdXqG76f-g_uQhDjX3iEA?usp=sharing
