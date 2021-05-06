@@ -8,7 +8,7 @@ To download libraries and build the project, please use following command for ea
 Before Run the Project, Build the project
 - Feedback Server -> mvn clean install -DskipTests
 - Feedback Common Library -> mvn clean install -DskipTests
-- FeedbackClient -> mvn clean install -DskipTests`
+- FeedbackClient -> mvn clean install -DskipTests
 
 To Run the project 
 - Run sql dump 
