@@ -13,13 +13,20 @@ import java.util.List;
 /**
  * @author Lakitha Prabudh on 3/26/21
  */
-public class AnswerRepository implements SuperRepository{
+public class AnswerRepository implements SuperRepository {
 
     @Override
     public boolean save(Object o) {
         return false;
     }
 
+    /**
+     * This method used to save answers
+     *
+     * @param questionId Integer
+     * @param answer     String
+     * @return boolean
+     */
     public boolean save(int questionId, String answer) {
         try (Connection connection = DBConnection.getConnection()) {
             String insertTableSQL = "INSERT INTO answer (`question_id`, `answer`) VALUES (?,?)";
@@ -34,20 +41,12 @@ public class AnswerRepository implements SuperRepository{
         }
     }
 
-    public boolean update(int questionId, String answer) {
-        try (Connection connection = DBConnection.getConnection()) {
-            String insertTableSQL = "UPDATE answer SET answer = ? WHERE question_id = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertTableSQL)) {
-                preparedStatement.setString(1, answer);
-                preparedStatement.setInt(2, questionId);
-                return preparedStatement.executeUpdate() > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new SugarBeachDatabaseException(e.getMessage());
-        }
-    }
-
+    /**
+     * This method used to delete answer
+     *
+     * @param questionId Integer
+     * @return boolean
+     */
     public boolean delete(int questionId) {
         try (Connection connection = DBConnection.getConnection()) {
             String insertTableSQL = "DELETE FROM answer WHERE question_id = ?";
@@ -66,6 +65,12 @@ public class AnswerRepository implements SuperRepository{
         return null;
     }
 
+    /**
+     * This method used to find answer by question_id
+     *
+     * @param id Integer
+     * @return {@link List<AnswerModel>}
+     */
     @Override
     public List<AnswerModel> findAllById(int id) {
         List<AnswerModel> answerList = new ArrayList<>();
@@ -97,6 +102,12 @@ public class AnswerRepository implements SuperRepository{
         }
     }
 
+    /**
+     * This method used to get answer by answer id
+     *
+     * @param answerId Integer
+     * @return answer string
+     */
     public String getAnswerById(int answerId) {
         try (Connection connection = DBConnection.getConnection()) {
             String sql = "SELECT * FROM answer where id = ?";

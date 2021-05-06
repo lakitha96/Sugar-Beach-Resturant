@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 /**
  * @author Lakitha Prabudh on 3/26/21
  */
-public class ServiceFactoryImpl extends UnicastRemoteObject implements ServiceFactory{
+public class ServiceFactoryImpl extends UnicastRemoteObject implements ServiceFactory {
     private static ServiceFactory serviceFactory;
 
     public ServiceFactoryImpl() throws RemoteException {
@@ -26,11 +26,11 @@ public class ServiceFactoryImpl extends UnicastRemoteObject implements ServiceFa
      * Create object without exposing the creation logic to the client and refer
      * to newly created object using a common interface.
      *
-     * @param serviceType Enum
-     * @return Service
+     * @param serviceType {@link ServiceType}
+     * @return Service {@link SuperService}
      */
     @Override
-    public SuperService getService(ServiceType serviceType) throws RemoteException{
+    public SuperService getService(ServiceType serviceType) throws RemoteException {
         switch (serviceType) {
             case QUESTIONNAIRE:
                 return new QuestionnaireServiceImpl();

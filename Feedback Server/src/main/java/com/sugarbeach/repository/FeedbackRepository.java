@@ -5,7 +5,10 @@ import com.sugarbeach.exception.SugarBeachDatabaseException;
 import com.sugarbeach.model.FeedbackReportModel;
 import com.sugarbeach.resource.FeedbackResource;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,10 +52,16 @@ public class FeedbackRepository implements SuperRepository {
                 .trim();
     }
 
+    /**
+     * This method used get feedback count by question Id
+     *
+     * @param answerIdList {@link List<Integer>}
+     * @return {@link List<FeedbackReportModel}
+     */
     public List<FeedbackReportModel> getFeedbackCountByQuestionId(List<Integer> answerIdList) {
         List<FeedbackReportModel> reportList = new ArrayList<>();
         try (Connection connection = DBConnection.getConnection()) {
-            String sql = "SELECT answer_id, count(answer_id) AS count FROM feedback WHERE answer_id in (" + getCustomArrayString(answerIdList) +") GROUP BY answer_id; ";
+            String sql = "SELECT answer_id, count(answer_id) AS count FROM feedback WHERE answer_id in (" + getCustomArrayString(answerIdList) + ") GROUP BY answer_id; ";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {

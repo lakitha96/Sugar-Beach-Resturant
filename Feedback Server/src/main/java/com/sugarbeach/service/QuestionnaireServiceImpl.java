@@ -34,9 +34,10 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     /**
      * This method used to retrieve all questionnaire with it's answers
      *
+     * @return {@link List<QuestionnaireResource}
      */
     @Override
-    public List<QuestionnaireResource> getAllQuestionWithAnswers() throws RemoteException{
+    public List<QuestionnaireResource> getAllQuestionWithAnswers() throws RemoteException {
         List<QuestionModel> questionList = questionRepository.findAll();
         return questionList.stream().map(questionModel -> {
             List<AnswerModel> answerModelList = answerRepository.findAllById(questionModel.getId());
@@ -55,9 +56,11 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     /**
      * This method used save question and answers
      * This method only used for admin panel
+     *
+     * @return boolean
      */
     @Override
-    public boolean save(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
+    public boolean save(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
         long questionId = questionRepository.saveQuestionnaire(questionnaireAdminResource);
         questionnaireAdminResource.setQuestionId((int) questionId);
         AtomicBoolean isAnswersSaved = new AtomicBoolean(false);
@@ -70,9 +73,12 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     /**
      * This method used update question and answers
      * This method only used for admin panel
+     *
+     * @param questionnaireAdminResource {@link QuestionnaireAdminResource}
+     * @return boolean
      */
     @Override
-    public boolean update(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
+    public boolean update(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
         boolean isUpdated = questionRepository.update(questionnaireAdminResource);
         AtomicBoolean isAnswersUpdated = new AtomicBoolean(false);
         answerRepository.delete(questionnaireAdminResource.getQuestionId());
@@ -85,9 +91,12 @@ public class QuestionnaireServiceImpl extends UnicastRemoteObject implements Que
     /**
      * This method used delete question and answers
      * This method only used for admin panel
+     *
+     * @param questionnaireAdminResource {@link QuestionnaireAdminResource}
+     * @return boolean
      */
     @Override
-    public boolean delete(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException{
+    public boolean delete(QuestionnaireAdminResource questionnaireAdminResource) throws RemoteException {
         boolean isDeleted = questionRepository.delete(questionnaireAdminResource.getQuestionId());
         boolean isAnswerDeleted = answerRepository.delete(questionnaireAdminResource.getQuestionId());
         return isDeleted && isAnswerDeleted;

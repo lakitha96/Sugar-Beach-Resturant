@@ -2,26 +2,31 @@ package com.sugarbeach.repository;
 
 import com.sugarbeach.db.DBConnection;
 import com.sugarbeach.exception.SugarBeachDatabaseException;
-import com.sugarbeach.model.AnswerModel;
 import com.sugarbeach.model.QuestionModel;
-import com.sugarbeach.resource.FeedbackResource;
 import com.sugarbeach.resource.QuestionnaireAdminResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Lakitha Prabudh on 3/11/21
  */
-public class QuestionRepository implements SuperRepository{
+public class QuestionRepository implements SuperRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(QuestionRepository.class);
 
-
-
+    /**
+     * This method used save questionnaire
+     *
+     * @param questionnaireObject Object
+     * @return long
+     */
     public long saveQuestionnaire(Object questionnaireObject) {
         QuestionnaireAdminResource questionnaireAdminResource = (QuestionnaireAdminResource) questionnaireObject;
         try (Connection connection = DBConnection.getConnection()) {
@@ -30,7 +35,7 @@ public class QuestionRepository implements SuperRepository{
                 preparedStatement.setString(1, questionnaireAdminResource.getQuestion());
                 preparedStatement.setString(2, "check_box");
                 preparedStatement.executeUpdate();
-                try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                     resultSet.next();
                     return resultSet.getLong(1);
                 }
@@ -41,6 +46,12 @@ public class QuestionRepository implements SuperRepository{
         }
     }
 
+    /**
+     * This method used to update question
+     *
+     * @param questionnaireAdminResource {@link QuestionnaireAdminResource}
+     * @return boolean
+     */
     public boolean update(QuestionnaireAdminResource questionnaireAdminResource) {
         try (Connection connection = DBConnection.getConnection()) {
             String insertTableSQL = "UPDATE question SET question = ?, type = ? WHERE id = ?";
@@ -56,6 +67,12 @@ public class QuestionRepository implements SuperRepository{
         }
     }
 
+    /**
+     * This method used to delete question
+     *
+     * @param questionId Integer
+     * @return boolean
+     */
     public boolean delete(int questionId) {
         try (Connection connection = DBConnection.getConnection()) {
             String insertTableSQL = "DELETE FROM question WHERE id = ?";
@@ -74,6 +91,11 @@ public class QuestionRepository implements SuperRepository{
         return false;
     }
 
+    /**
+     * This method used to find all questions
+     *
+     * @return List
+     */
     @Override
     public List findAll() {
         List<QuestionModel> questionModelList = new ArrayList<>();

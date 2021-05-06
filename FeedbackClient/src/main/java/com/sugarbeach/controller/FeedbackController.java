@@ -19,10 +19,24 @@ public class FeedbackController {
         feedbackService = (FeedbackService) ProxyHandler.getInstance().getService(ServiceType.FEEDBACK);
     }
 
-    public boolean save(List<FeedbackResource> feedbackResourceList) throws RemoteException{
+    /**
+     * This method used to save feedback on server
+     *
+     * @param feedbackResourceList {@link List<FeedbackResource>}
+     * @return boolean
+     * @throws RemoteException
+     */
+    public boolean save(List<FeedbackResource> feedbackResourceList) throws RemoteException {
         return feedbackService.save(feedbackResourceList);
     }
 
+    /**
+     * This method used to getFeedbackReport data from server
+     *
+     * @param questionId Integer
+     * @return {@link FeedbackReportResource}
+     * @throws RemoteException
+     */
     public FeedbackReportResource getFeedbackReportData(int questionId) throws RemoteException {
         return feedbackService.getFeedbackReportData(questionId);
     }

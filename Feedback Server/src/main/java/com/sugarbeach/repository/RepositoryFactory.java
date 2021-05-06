@@ -24,10 +24,10 @@ public class RepositoryFactory {
      * Create object without exposing the creation logic to the client and refer
      * to newly created object using a common interface.
      *
-     * @param repositoryType Enum
-     * @return Repository
+     * @param repositoryType {@link RepositoryType}
+     * @return {@link SuperRepository}
      */
-    public SuperRepository getRepository(RepositoryType repositoryType){
+    public SuperRepository getRepository(RepositoryType repositoryType) {
         switch (repositoryType) {
             case QUESTION:
                 return new QuestionRepository();

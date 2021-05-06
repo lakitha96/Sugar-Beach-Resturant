@@ -26,6 +26,12 @@ public class UserRepository implements SuperRepository {
         return null;
     }
 
+    /**
+     * This method used to find by username
+     *
+     * @param username String
+     * @return {@link UserModel}
+     */
     public UserModel findByUsername(String username) {
         try (Connection connection = DBConnection.getConnection()) {
             String sql = "SELECT * FROM user where username = ?";

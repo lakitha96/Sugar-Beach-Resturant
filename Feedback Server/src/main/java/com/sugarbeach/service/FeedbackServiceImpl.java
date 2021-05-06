@@ -38,7 +38,7 @@ public class FeedbackServiceImpl extends UnicastRemoteObject implements Feedback
      * This method used to save guest users feedback on the database
      *
      * @param feedbackResourceList answered questionnaires
-     * @return success/ failed on database saving
+     * @return success/ failed on database saving boolean
      * @throws RemoteException
      */
     @Override
@@ -54,7 +54,7 @@ public class FeedbackServiceImpl extends UnicastRemoteObject implements Feedback
     /**
      * This method will used to get data for generate report
      *
-     * @param questionId
+     * @param questionId Integer
      * @return FeedbackReportResource
      */
     @Override
